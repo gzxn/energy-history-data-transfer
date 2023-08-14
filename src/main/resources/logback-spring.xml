@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <!-- 日志路径前缀 -->
+    <property name="dir" value="logs" />
+    <!-- Console输出方式 -->
+    <property name="console_log_pattern"
+              value="%cyan(%date)  %highlight(%-5level) %green([%thread]) %magenta(%logger{50}:%L) - %msg%n" />
+    <property name="file_log_pattern"
+              value="%date [%thread] %-5level %logger{50}:%L - %msg%n" />
+
+    <!-- 控制台日志 -->
+    <appender name="consoleLog"
+              class="ch.qos.logback.core.ConsoleAppender">
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <pattern>${console_log_pattern}</pattern>
+        </layout>
+    </appender>
+
+    <!-- 文件日志 -->
+    <appender name="fileLog"
+              class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <encoder>
+            <pattern>${file_log_pattern}</pattern>
+        </encoder>
+        <File>${dir}/today.log</File>
+        <rollingPolicy
+                class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <FileNamePattern>${dir}/history/%d{yyyy-MM-dd}.log.gz
+            </FileNamePattern>
+            <maxHistory>7</maxHistory>
+        </rollingPolicy>
+    </appender>
+
+    <root level="debug">
+        <appender-ref ref="consoleLog" />
+    </root>
+
+    <root level="info">
+        <appender-ref ref="fileLog" />
+    </root>
+</configuration>
