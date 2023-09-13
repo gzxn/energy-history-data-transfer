@@ -89,7 +89,8 @@ public class HistoryToInfluxDb extends SyncData implements Runnable {
         try {
             log.info("----------------开始同步新数据");
             while (!completeFlag) {
-                List<ScaHistoryData> scaHistoryDataList = historyDataDao.queryScaHistoryListById(ID, ID + 100000);
+                List<ScaHistoryData> scaHistoryDataList = historyDataDao.queryScaHistoryListById(ID, ID + 150000);
+                log.info("startID: " + ID + ", endID: " + (ID + 150000));
                 if (scaHistoryDataList.size() > 0) {
                     List<HistoryData> historyDataList = new ArrayList<>(8);
                     for (ScaHistoryData scaHistoryData : scaHistoryDataList) {
